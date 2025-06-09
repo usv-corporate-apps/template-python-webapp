@@ -29,7 +29,7 @@ variable "FLASK_ENV" {
   type        = string
 }
 
-job "python-mvc-job" {
+job "" {
   name = "${var.APP_NAME}"
   datacenters = [var.NOMAD_DATACENTER]
   type        = "service"

@@ -2,14 +2,6 @@ name: 'Deploy Image'
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch to deploy'
-        required: true
-        default: 'main'
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        default: 'test'
       tag:
         description: 'Tag to deploy'
         required: true
@@ -31,7 +23,7 @@ jobs:
       NOMAD_VAR_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
       NOMAD_VAR_FLASK_ENV: "test"
       NOMAD_VAR_APP_NAME: ${{ vars.APP_NAME }}
-      NOMAD_VAR_IMAGE_TAG: ${{ vars.REGISTRY }}/${{ vars.APP_NAME }}:${{ github.ref_name }}
+      NOMAD_VAR_IMAGE_TAG: ${{ vars.REGISTRY }}/${{ vars.APP_NAME }}:${{ inputs.tag }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -59,7 +51,7 @@ jobs:
       NOMAD_VAR_REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
       NOMAD_VAR_FLASK_ENV: "production"
       NOMAD_VAR_APP_NAME: ${{ vars.APP_NAME }}
-      NOMAD_VAR_IMAGE_TAG: ${{ vars.REGISTRY}}/${{ vars.APP_NAME }}:${{ github.ref_name }}
+      NOMAD_VAR_IMAGE_TAG: ${{ vars.REGISTRY }}/${{ vars.APP_NAME }}:${{ inputs.tag }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
